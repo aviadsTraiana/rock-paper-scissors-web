@@ -1,15 +1,26 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"net/http"
+	"text/template"
 )
 
 func homePage(w http.ResponseWriter, r *http.Request) {
-	html := `<strong>Hello world</strong>`
-	w.Header().Set("Content-Type", "text/html")
-	fmt.Fprintf(w, html)
+	// html := `<strong>Hello world</strong>`
+	// w.Header().Set("Content-Type", "text/html")
+	//fmt.Fprintf(w, html)
+	t, err := template.ParseFiles("index.html")
+	if err != nil {
+		log.Fatal(err)
+		return
+	}
+	err = t.Execute(w, nil)
+	if err != nil {
+		log.Fatal(err)
+		return
+	}
+
 }
 
 func main() {
