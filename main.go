@@ -5,6 +5,7 @@ import (
 	"log"
 	"myapp/rps"
 	"net/http"
+	"strconv"
 	"text/template"
 )
 
@@ -17,8 +18,8 @@ func homePage(w http.ResponseWriter, r *http.Request) {
 }
 
 func playRound(w http.ResponseWriter, r *http.Request) {
-	round := rps.PlayRound(1)
-
+	playerChoice , _:= strconv.Atoi(r.URL.Query().Get("c"))
+	round := rps.PlayRound(playerChoice)
 	out, err := json.MarshalIndent(round, "", "    ")
 	if err != nil {
 		log.Fatal(err)

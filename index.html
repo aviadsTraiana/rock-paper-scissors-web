@@ -22,12 +22,29 @@
   <br>
 
 
-  <button type="button" class="btn btn-primary">Rock</button>
-  <button type="button" class="btn btn-secondary">Paper</button>
-  <button type="button" class="btn btn-success">Sissors</button>
+  <button type="button" class="btn btn-primary" onclick="choose(0)">Rock</button>
+  <button type="button" class="btn btn-secondary" onclick="choose(1)">Paper</button>
+  <button type="button" class="btn btn-success" onclick="choose(2)">Scissors</button>
 </div>
 
 
 
 </body>
+<script>
+  function choose(x) {
+    fetch("/play?c="+x).then(response => response.json()).then(json=> {
+        //console.log(json)
+        if(x==0){
+          document.getElementById("player_choice").innerHTML = "Player choose ROCK"
+        }else if(x==1){
+          document.getElementById("player_choice").innerHTML = "Player Choose PAPER"
+        }else if(x==2){
+          document.getElementById("player_choice").innerHTML = "Player Choose SCISSORS"
+        }
+
+        document.getElementById("computer_choice").innerHTML = json.computer_choice
+        document.getElementById("round_choice").innerHTML = json.round_result
+      })
+  }
+</script>
 </html>
