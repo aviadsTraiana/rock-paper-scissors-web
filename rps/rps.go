@@ -23,7 +23,7 @@ const (
 //Round holds the result and choices of a round
 type Round struct {
 	Winner         int    `json:"winner"`
-	ComputerChoice string `json:"comuter_choice"`
+	ComputerChoice string `json:"computer_choice"`
 	RoundResult    string `json:"round_result"`
 }
 
