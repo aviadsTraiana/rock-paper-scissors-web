@@ -22,9 +22,9 @@ const (
 
 //Round holds the result and choices of a round
 type Round struct {
-	Winner         int
-	ComputerChoice string
-	RoundResult    string
+	Winner         int    `json:"winner"`
+	ComputerChoice string `json:"comuter_choice"`
+	RoundResult    string `json:"round_result"`
 }
 
 //PlayRound get a player value and returns
