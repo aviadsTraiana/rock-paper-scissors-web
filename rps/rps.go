@@ -12,17 +12,29 @@ const (
 	PAPER = 1
 	//SCISSORS beats paper. (paper + 1) % 3 = 2
 	SCISSORS = 2
-	//PLAYERWINS indicate that a player wins the round
-	PLAYERWINS = 1
-	//COMPUTERWINS indicate that a computer wins the round
-	COMPUTERWINS = 2
-	//DRAW indicate that a no one win the round
-	DRAW = 3
 )
+
+var winMessages = []string{
+	"Good job!",
+	"Nice work!",
+	"You should buy a lottery ticket",
+}
+
+var loseMessages = []string{
+	"Too bad!",
+	"Try again!",
+	"This is just not your day.",
+}
+
+var drawMessages = []string{
+	"Great minds think alike.",
+	"Uh oh. Try again.",
+	"Nobody wins, but you can try again.",
+}
 
 //Round holds the result and choices of a round
 type Round struct {
-	Winner         int    `json:"winner"`
+	Message        string `json:"message"`
 	ComputerChoice string `json:"computer_choice"`
 	RoundResult    string `json:"round_result"`
 }
@@ -32,7 +44,7 @@ type Round struct {
 func PlayRound(playerValue int) Round {
 	rand.Seed(time.Now().UnixNano())
 	computerValue := rand.Intn(3)
-	var winner int
+	var message string
 	var computerChoice, roundResult string
 
 	switch computerValue {
@@ -48,19 +60,21 @@ func PlayRound(playerValue int) Round {
 	default:
 	}
 
+	messageIndex := rand.Intn(3)
+
 	if playerValue == computerValue {
 		roundResult = "It's a draw"
-		winner = DRAW
+		message = drawMessages[messageIndex]
 	} else if playerValue == (computerValue+1)%3 {
 		roundResult = "Player wins!"
-		winner = PLAYERWINS
+		message = winMessages[messageIndex]
 	} else {
 		roundResult = "Computer wins!"
-		winner = COMPUTERWINS
+		message = loseMessages[messageIndex]
 	}
 
 	return Round{
-		Winner:         winner,
+		Message:        message,
 		ComputerChoice: computerChoice,
 		RoundResult:    roundResult,
 	}
