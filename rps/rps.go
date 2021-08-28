@@ -20,11 +20,20 @@ const (
 	DRAW = 3
 )
 
+//Round holds the result and choices of a round
+type Round struct {
+	Winner         int
+	ComputerChoice string
+	RoundResult    string
+}
+
 //PlayRound get a player value and returns
 // (Winner Value,Computer choice, round Result)
-func PlayRound(playerValue int) (winner int, computerChoice string, roundResult string) {
+func PlayRound(playerValue int) Round {
 	rand.Seed(time.Now().UnixNano())
 	computerValue := rand.Intn(3)
+	var winner int
+	var computerChoice, roundResult string
 
 	switch computerValue {
 	case ROCK:
@@ -50,5 +59,9 @@ func PlayRound(playerValue int) (winner int, computerChoice string, roundResult 
 		winner = COMPUTERWINS
 	}
 
-	return winner, computerChoice, roundResult
+	return Round{
+		Winner:         winner,
+		ComputerChoice: computerChoice,
+		RoundResult:    roundResult,
+	}
 }

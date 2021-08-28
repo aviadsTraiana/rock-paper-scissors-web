@@ -16,8 +16,8 @@ func homePage(w http.ResponseWriter, r *http.Request) {
 }
 
 func playRound(w http.ResponseWriter, r *http.Request) {
-	winner, pcChoice, result := rps.PlayRound(1)
-	log.Println(winner,pcChoice,result)
+	round := rps.PlayRound(1)
+	log.Println(round)
 }
 
 func main() {
