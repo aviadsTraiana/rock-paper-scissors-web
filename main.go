@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"log"
 	"myapp/rps"
 	"net/http"
@@ -17,7 +18,14 @@ func homePage(w http.ResponseWriter, r *http.Request) {
 
 func playRound(w http.ResponseWriter, r *http.Request) {
 	round := rps.PlayRound(1)
-	log.Println(round)
+
+	out, err := json.MarshalIndent(round, "", "    ")
+	if err != nil {
+		log.Fatal(err)
+		return
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.Write(out)
 }
 
 func main() {
